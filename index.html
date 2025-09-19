@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RepLink - Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><strong>RepLink</strong></li>
+      </ul>
+      <ul>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="#">Register</a></li>
+        <li><a href="#" role="button">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <div class="grid">
+        <section>
+          <hgroup>
+            <h2>Welcome to RepLink</h2>
+            <h3>Your business and rep management platform</h3>
+          </hgroup>
+          <p>Empower your team. Manage your brand. All in one place.</p>
+          <figure>
+            <img src="images/placeholder-banner.jpg" alt="Platform overview" />
+            <figcaption><a href="#" target="_blank">Replace with your own banner</a></figcaption>
+          </figure>
+          <h3>For Business Owners</h3>
+          <p>Manage reps, send announcements, assign credits, and track performance.</p>
+          <h3>For Reps</h3>
+          <p>View discounts, credits, your rep code, and request payouts — on any device.</p>
+        </section>
+      </div>
+    </main>
+
+    <section aria-label="Subscribe example">
+      <div class="container">
+        <article>
+          <hgroup>
+            <h2>Coming Soon: Full Platform Integration</h2>
+            <h3>Sign up and get notified when we're live</h3>
+          </hgroup>
+          <form class="grid">
+            <input type="text" id="firstname" name="firstname" placeholder="Your name" aria-label="First name" required />
+            <input type="email" id="email" name="email" placeholder="Your email" aria-label="Email address" required />
+            <button type="submit" onclick="event.preventDefault()">Notify Me</button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <footer class="container">
+      <small><a href="#">Privacy</a> • <a href="#">Terms</a></small>
+    </footer>
+  </body>
+</html>

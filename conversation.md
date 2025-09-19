@@ -1,0 +1,1 @@
+User is building a business/rep management app frontend. This includes HTML, CSS, JS, and placeholder images. Color scheme is purple and mint. Pages include index, login, and role-based dashboard. Images are now named correctly to allow zip creation.

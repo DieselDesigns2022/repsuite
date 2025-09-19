@@ -1,0 +1,25 @@
+body {
+  --primary: #6a0dad; /* purple */
+  --accent: #2ed9c3; /* mint/teal */
+  background-color: #f9f9fc;
+  font-family: system-ui, sans-serif;
+}
+
+nav strong {
+  color: var(--primary);
+}
+
+h2, h3 {
+  color: var(--primary);
+}
+
+button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RepLink - Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><strong>RepLink</strong></li>
+      </ul>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h2 id="dashboard-title">Dashboard</h2>
+      <div id="rep-dashboard" style="display: none">
+        <p><strong>Rep Code:</strong> REPLINK123</p>
+        <p><strong>Discount:</strong> 15%</p>
+        <p><strong>Monthly Credit:</strong> $100</p>
+        <p><strong>Status:</strong> Active</p>
+        <img src="images/placeholder-profile.jpg" alt="Rep profile" style="max-width: 200px" />
+      </div>
+
+      <div id="owner-dashboard" style="display: none">
+        <p><strong>Total Reps:</strong> 12</p>
+        <p><strong>Active Campaigns:</strong> 3</p>
+        <button>Send Announcement</button>
+        <button>View Payout Requests</button>
+      </div>
+    </main>
+
+    <footer class="container">
+      <small><a href="#">Dashboard Help</a> • <a href="#">Terms</a></small>
+    </footer>
+
+    <script>
+      const role = localStorage.getItem("role");
+      document.getElementById("dashboard-title").innerText = role === "owner" ? "Business Owner Dashboard" : "Rep Dashboard";
+      if (role === "rep") document.getElementById("rep-dashboard").style.display = "block";
+      if (role === "owner") document.getElementById("owner-dashboard").style.display = "block";
+    </script>
+  </body>
+</html>
