@@ -28,6 +28,7 @@
         </select>
         <button type="submit">Create Account</button>
       </form>
+      <p id="signup-message" style="color: red;"></p>
     </main>
 
     <footer class="container">
@@ -37,9 +38,11 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
-      const SUPABASE_URL = "https://znnpdlespsxprzbipvhh.supabase.co";
-      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpubnBkbGVzcHN4cHJ6YmlwdmhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNDQxMzYsImV4cCI6MjA3MzgyMDEzNn0.698cAUiIhug1sA9636z7HNnLkuNqenksoGGbfyf_MYY";
-      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+      const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+      // ✅ FIXED: Rename the client variable to avoid conflict
+      const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       async function handleSignup(event) {
         event.preventDefault();
@@ -47,22 +50,39 @@
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const role = document.getElementById("role").value;
+        const message = document.getElementById("signup-message");
 
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: { role: role },
-          },
-        });
+        message.textContent = "";
 
-        if (error) {
-          alert("Signup failed: " + error.message);
-        } else {
-          // Save role locally so we can load correct dashboard
+        console.log("Attempting signup for", email, "with role", role);
+
+        try {
+          const { data, error } = await supa.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { role: role },
+            },
+          });
+
+          if (error) {
+            console.error("Signup failed:", error);
+            message.textContent = "Signup failed: " + error.message;
+            return;
+          }
+
+          console.log("Signup success:", data);
           localStorage.setItem("role", role);
-          alert("Signup successful! Redirecting to dashboard...");
-          window.location.href = "dashboard.html";
+
+          if (data.user && !data.session) {
+            message.style.color = "green";
+            message.textContent = "Check your email to confirm your account.";
+          } else {
+            window.location.href = "dashboard.html";
+          }
+        } catch (err) {
+          console.error("Unexpected error:", err);
+          message.textContent = "Unexpected error: " + err.message;
         }
       }
     </script>
