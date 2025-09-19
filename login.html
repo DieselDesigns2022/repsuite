@@ -20,7 +20,7 @@
     <main class="container">
       <h2>Login</h2>
       <form onsubmit="handleLogin(event)" class="grid">
-        <input type="text" id="username" placeholder="Username" required />
+        <input type="email" id="username" placeholder="Email" required />
         <select id="role">
           <option value="rep">Rep</option>
           <option value="owner">Business Owner</option>
@@ -33,6 +33,13 @@
       <small><a href="#">Support</a> • <a href="#">Docs</a></small>
     </footer>
 
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+      const SUPABASE_URL = "https://znnpdlespsxprzbipvhh.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpubnBkbGVzcHN4cHJ6YmlwdmhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNDQxMzYsImV4cCI6MjA3MzgyMDEzNn0.698cAUiIhug1sA9636z7HNnLkuNqenksoGGbfyf_MYY";
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
