@@ -14,21 +14,22 @@
       </ul>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="login.html">Logout</a></li>
+        <li><a href="#" onclick="handleLogout()" role="button">Logout</a></li>
       </ul>
     </nav>
 
     <main class="container">
       <h2 id="dashboard-title">Dashboard</h2>
-      <div id="rep-dashboard" style="display: none">
+
+      <div id="rep-dashboard" style="display: none;">
         <p><strong>Rep Code:</strong> REPLINK123</p>
         <p><strong>Discount:</strong> 15%</p>
         <p><strong>Monthly Credit:</strong> $100</p>
         <p><strong>Status:</strong> Active</p>
-        <img src="images/placeholder-profile.jpg" alt="Rep profile" style="max-width: 200px" />
+        <img src="images/placeholder-profile.jpg" alt="Rep profile" style="max-width: 200px;" />
       </div>
 
-      <div id="owner-dashboard" style="display: none">
+      <div id="owner-dashboard" style="display: none;">
         <p><strong>Total Reps:</strong> 12</p>
         <p><strong>Active Campaigns:</strong> 3</p>
         <button>Send Announcement</button>
@@ -40,11 +41,44 @@
       <small><a href="#">Dashboard Help</a> • <a href="#">Terms</a></small>
     </footer>
 
+    <!-- Supabase Auth Check -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
-      const role = localStorage.getItem("role");
-      document.getElementById("dashboard-title").innerText = role === "owner" ? "Business Owner Dashboard" : "Rep Dashboard";
-      if (role === "rep") document.getElementById("rep-dashboard").style.display = "block";
-      if (role === "owner") document.getElementById("owner-dashboard").style.display = "block";
+      const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+      const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      async function checkAuth() {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!session) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const role = localStorage.getItem("role");
+        const dashboardTitle = document.getElementById("dashboard-title");
+
+        if (role === "rep") {
+          document.getElementById("rep-dashboard").style.display = "block";
+          dashboardTitle.innerText = "Rep Dashboard";
+        } else if (role === "owner") {
+          document.getElementById("owner-dashboard").style.display = "block";
+          dashboardTitle.innerText = "Business Owner Dashboard";
+        } else {
+          dashboardTitle.innerText = "Unknown Role";
+        }
+      }
+
+      async function handleLogout() {
+        await supabase.auth.signOut();
+        localStorage.removeItem("role");
+        window.location.href = "login.html";
+      }
+
+      checkAuth();
     </script>
   </body>
 </html>
