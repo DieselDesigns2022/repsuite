@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RepLink - Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="container-fluid">
+      <ul>
+        <li><strong>RepLink</strong></li>
+      </ul>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      <h2>Sign Up</h2>
+      <form onsubmit="handleSignup(event)" class="grid">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <select id="role">
+          <option value="rep">Rep</option>
+          <option value="owner">Business Owner</option>
+        </select>
+        <button type="submit">Create Account</button>
+      </form>
+    </main>
+
+    <footer class="container">
+      <small><a href="#">Help</a> • <a href="#">Privacy</a></small>
+    </footer>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+      const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+      const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      async function handleSignup(event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { role: role },
+          },
+        });
+
+        if (error) {
+          alert("Signup failed: " + error.message);
+        } else {
+          // Save role locally so we can load correct dashboard
+          localStorage.setItem("role", role);
+          alert("Signup successful! Redirecting to dashboard...");
+          window.location.href = "dashboard.html";
+        }
+      }
+    </script>
+  </body>
+</html>
